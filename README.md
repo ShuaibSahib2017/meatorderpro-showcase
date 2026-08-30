@@ -15,8 +15,9 @@ The source code, infrastructure identifiers, production endpoints, customer info
 ### Platform Architecture
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph Channels[Order and Operations Channels]
+        direction LR
         B2B[B2B Ordering]
         B2C[B2C Ordering]
         ADMIN[Admin Tools]
@@ -24,22 +25,29 @@ flowchart LR
         DRIVER[Driver Portal]
     end
 
-    subgraph Platform[Cloud Platform]
+    subgraph Access[Secure Access]
+        direction LR
         EDGE[Secure Web Delivery]
         AUTH[Identity and Access]
         API[API and GraphQL Layer]
+    end
+
+    subgraph Platform[Cloud Platform]
+        direction LR
         FLOW[Workflow Orchestration]
         EVENTS[Events and Queues]
         SERVICES[Domain Services]
     end
 
     subgraph Data[Data and Communications]
+        direction LR
         DB[(Operational Data)]
         FILES[(Documents and Media)]
         NOTIFY[Email and Notifications]
     end
 
     subgraph Factory[Factory Integration]
+        direction LR
         PRINT[Label and Document Printing]
         CLOCK[Time and Attendance]
     end
@@ -65,14 +73,22 @@ flowchart LR
 ### Order Lifecycle
 
 ```mermaid
-flowchart LR
-    ORDER[Order Received] --> VALIDATE[Policy and Capacity Validation]
-    VALIDATE --> PLAN[Production Planning]
-    PLAN --> PACK[Weight Capture and Packing]
-    PACK --> LABEL[Labels and Documents]
-    LABEL --> DISPATCH[Dispatch and Driver Assignment]
-    DISPATCH --> DELIVERY[Delivery Confirmation]
-    DELIVERY --> FINANCE[Invoice and Reporting]
+flowchart TB
+    subgraph Prepare[Plan and Prepare]
+        direction LR
+        ORDER[Order Received] --> VALIDATE[Policy and Capacity Validation]
+        VALIDATE --> PLAN[Production Planning]
+        PLAN --> PACK[Weight Capture and Packing]
+    end
+
+    subgraph Complete[Complete and Report]
+        direction LR
+        LABEL[Labels and Documents] --> DISPATCH[Dispatch and Driver Assignment]
+        DISPATCH --> DELIVERY[Delivery Confirmation]
+        DELIVERY --> FINANCE[Invoice and Reporting]
+    end
+
+    PACK --> LABEL
 
     VALIDATE -. exception .-> REVIEW[Human Review]
     PACK -. variance .-> REVIEW
