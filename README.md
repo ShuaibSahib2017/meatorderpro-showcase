@@ -95,6 +95,21 @@ flowchart TB
     REVIEW --> PLAN
 ```
 
+### AWS Services by Stage
+
+| Stage | AWS services | Role in the platform |
+|---|---|---|
+| Web delivery and secure access | CloudFront, S3, Cognito, IAM | Deliver the web applications and enforce authenticated, role-based access |
+| Order intake and APIs | AppSync, API Gateway, Lambda | Provide GraphQL and HTTP entry points for ordering and operational tools |
+| Validation and operational data | Lambda, DynamoDB | Apply fresh-product rules and persist orders, capacity, inventory, and workflow state |
+| Workflow orchestration and background processing | Step Functions, EventBridge, SQS, SNS | Coordinate workflows, schedule jobs, decouple services, and fan out events |
+| Weight capture, packing, and factory output | Lambda, DynamoDB, SQS, S3 | Persist packed weights, queue print jobs, and store generated documents |
+| Dispatch and driver delivery | AppSync, Lambda, DynamoDB, S3, EventBridge | Assign work, track delivery state, retain proof, and emit completion events |
+| Invoicing, statements, and communication | Lambda, DynamoDB, S3, SES | Generate financial documents, archive them, and send customer communications |
+| Time and attendance | API Gateway, Lambda, DynamoDB, S3, Cognito | Securely process punches, maintain live status, and generate timesheets |
+| Monitoring and recovery | CloudWatch, X-Ray, CloudWatch Synthetics, SNS | Centralize logs, metrics, traces, health checks, and operational alerts |
+| Voice and optional AI | Transcribe, Bedrock, Lambda | Support voice-assisted intake and optional generative operations alerts |
+
 ## Engineering Scope
 
 - Event-driven services for order processing, fulfilment, dispatch, notifications, and reporting
@@ -109,7 +124,9 @@ flowchart TB
 
 ## Technology
 
-AWS Lambda, AppSync, API Gateway, Step Functions, DynamoDB, S3, CloudFront, EventBridge, SQS, SES, Cognito, CloudWatch, Bedrock, Transcribe, Stripe, React, Node.js, Python, and PowerShell.
+**AWS:** Lambda, AppSync, API Gateway, Step Functions, DynamoDB, S3, CloudFront, EventBridge, SQS, SNS, SES, Cognito, IAM, CloudWatch, X-Ray, CloudWatch Synthetics, Bedrock, and Transcribe.
+
+**Application tooling:** React, Node.js, Python, PowerShell, and Stripe.
 
 ## Design Priorities
 
