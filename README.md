@@ -8,7 +8,7 @@ My focus is turning real operational constraints into reliable systems: clear se
 
 ## Featured Project: MeatOrderPro
 
-MeatOrderPro is a private production platform built for an Australian meat processing and distribution business. It coordinates wholesale and retail orders from checkout through fulfilment, dispatch, delivery, invoicing, and reporting.
+MeatOrderPro is a private production platform built for an Australian meat processing and distribution business. It coordinates wholesale and retail orders from checkout through factory production, weight capture, packing, dispatch, delivery, invoicing, and reporting.
 
 The source code, infrastructure identifiers, production endpoints, customer information, and operational runbooks are private. The diagrams below are intentionally high level.
 
@@ -99,15 +99,17 @@ flowchart TB
 
 - Event-driven services for order processing, fulfilment, dispatch, notifications, and reporting
 - Fresh-product rules covering lead times, cutoffs, fulfilment dates, blackout dates, and capacity
-- Role-based web applications for administrators, factory staff, drivers, and managers
+- Cognito-backed, role-based web applications for administrators, factory staff, drivers, and managers
+- Authorization-safe cache refresh for installed progressive web applications
 - On-premises integration for thermal labels, business documents, and attendance devices
+- Driver workflows for pickup, routing, location updates, proof of delivery, and completion
 - Payment, invoice, statement, and variable-weight order workflows
 - Monitoring, audit trails, retry handling, and operational recovery tooling
-- AI-assisted order intake and workflow suggestions with human review controls
+- Voice transcription and learning-assisted order intake, with optional generative operations alerts kept disabled
 
 ## Technology
 
-AWS Lambda, AppSync, API Gateway, Step Functions, DynamoDB, S3, CloudFront, EventBridge, SQS, SES, Cognito, CloudWatch, React, Node.js, Python, and PowerShell.
+AWS Lambda, AppSync, API Gateway, Step Functions, DynamoDB, S3, CloudFront, EventBridge, SQS, SES, Cognito, CloudWatch, Bedrock, Transcribe, Stripe, React, Node.js, Python, and PowerShell.
 
 ## Design Priorities
 
