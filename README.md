@@ -8,7 +8,7 @@ My practical technical experience comes from operating WooCommerce and working o
 
 ## My contribution
 
-MeatOrderPro was built from scratch over approximately three months of sustained development. AI tools supported parts of the implementation, but the work still required directing the build, supplying the business context, resolving problems, and repeatedly testing and refining the result. My personal work focuses on:
+MeatOrderPro was built from scratch through sustained development and iteration. AI tools supported parts of the implementation, but the work still required directing the build, supplying the business context, resolving problems, and repeatedly testing and refining the result. My personal work focuses on:
 
 - Understanding the needs of office staff, production teams, managers and drivers.
 - Turning those needs into workflow requirements and test scenarios.
@@ -17,6 +17,8 @@ MeatOrderPro was built from scratch over approximately three months of sustained
 - Supplying error details and context, then testing proposed changes.
 - Checking that ordering, invoicing, production and delivery workflows behave as expected.
 - Helping business users and documenting issues and outcomes.
+
+The wider work included building and integrating a Remote Clock attendance workflow with a physical device and sync agent, as well as learning WordPress and WooCommerce from the ground up and connecting the online ordering workflows with MeatOrderPro's operational processes.
 
 The technology section describes the platform's stack; the responsibilities above describe my personal contribution.
 
@@ -31,6 +33,7 @@ The platform connects wholesale and retail order handling with internal producti
 | Dispatch and delivery | Allocate driver work, communicate delivery details and retain proof of delivery |
 | Invoices and statements | Produce order documents and support checks of quantities, weights and payment outcomes |
 | Time and attendance | Collect attendance information and support timesheet reporting |
+| Device and platform integration | Connect attendance devices, sync agents, WordPress and WooCommerce workflows with the wider operating system |
 
 ### Simplified order workflow
 
