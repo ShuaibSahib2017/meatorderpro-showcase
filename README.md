@@ -50,6 +50,38 @@ flowchart TD
     D --> E["Invoices and records"]
 ```
 
+## Integration workflows
+
+These are simplified, conceptual views of two integration areas. They do not expose production endpoints, account identifiers or private operational data.
+
+### Remote Clock and device synchronisation
+
+```mermaid
+flowchart LR
+    A["Attendance device or phone"] --> B["Remote Clock page"]
+    B --> C["Cognito sign-in"]
+    C --> D["Authenticated punch request"]
+    D --> E["Attendance API"]
+    E --> F["Attendance records and timesheets"]
+    G["Sync agent"] --> E
+```
+
+The workflow records employee actions such as clock-in and clock-out, while the sync agent helps connect the device-side process with the central attendance workflow.
+
+### WooCommerce and operational ordering
+
+```mermaid
+flowchart LR
+    A["WooCommerce order"] --> B["Order webhook"]
+    B --> C["API and Lambda validation"]
+    C --> D["MeatOrderPro order records"]
+    D --> E["Order-created event"]
+    E --> F["Production and packing"]
+    F --> G["Dispatch, delivery and records"]
+```
+
+The ordering integration connects the online store with MeatOrderPro's operational workflow, so order details can be checked before production and fulfilment continue.
+
 ## How I approach support work
 
 1. Clarify what the user was trying to do and what happened instead.
