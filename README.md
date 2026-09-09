@@ -8,7 +8,7 @@ My practical technical experience comes from operating WooCommerce and working o
 
 ## My contribution
 
-AI tools supported parts of the implementation. My personal work focuses on:
+MeatOrderPro was built from scratch over approximately three months of sustained development. AI tools supported parts of the implementation, but the work still required directing the build, supplying the business context, resolving problems, and repeatedly testing and refining the result. My personal work focuses on:
 
 - Understanding the needs of office staff, production teams, managers and drivers.
 - Turning those needs into workflow requirements and test scenarios.
