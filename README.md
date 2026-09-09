@@ -58,15 +58,15 @@ These are simplified, conceptual views of two integration areas. They do not exp
 
 ```mermaid
 flowchart LR
-    A["Attendance device or phone"] --> B["Remote Clock page"]
-    B --> C["Cognito sign-in"]
-    C --> D["Authenticated punch request"]
-    D --> E["Attendance API"]
-    E --> F["Attendance records and timesheets"]
-    G["Sync agent"] --> E
+    A["On-site attendance device"] --> B["ADMS agent on site"]
+    C["Remote Clock web page"] --> D["Cognito sign-in"]
+    D --> E["Authenticated punch request"]
+    B --> F["Shared attendance workflow"]
+    E --> F
+    F --> G["Attendance records and timesheets"]
 ```
 
-The workflow records employee actions such as clock-in and clock-out, while the sync agent helps connect the device-side process with the central attendance workflow.
+The workflow supports staff clocking in or out from either the on-site device or the remote web page. For example, a staff member can clock in remotely and clock out on the device. The on-site ADMS agent synchronises device events with the shared attendance workflow.
 
 ### WooCommerce and operational ordering
 
