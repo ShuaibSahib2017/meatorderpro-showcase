@@ -4,23 +4,23 @@
 
 I work in wholesale operations and customer support, with earlier experience as an NBN telecommunications technician. I enjoy understanding how people use a system, investigating problems and making everyday workflows easier to manage.
 
-My practical technical experience comes from operating WooCommerce and working on MeatOrderPro, an internal AWS-based platform for a meat processing and distribution business.
+I built and supported MeatOrderPro from scratch with AI-assisted development: an internal AWS-based platform for a meat processing and distribution business. Alongside it, I learned WordPress and WooCommerce, set up an online store and connected its ordering workflows with business operations.
 
 ## My contribution
 
-MeatOrderPro was built from scratch through sustained development and iteration. AI tools supported parts of the implementation, but the work still required directing the build, supplying the business context, resolving problems, and repeatedly testing and refining the result. My personal work focuses on:
+I drove the project from the initial business requirements through the build, integration, testing and ongoing support. I used AI coding tools to generate and revise application code while personally directing the work and checking the results against real business needs.
 
-- Understanding the needs of office staff, production teams, managers and drivers.
-- Turning those needs into workflow requirements and test scenarios.
+My responsibilities included:
+
+- Gathering requirements from office staff, production teams, managers and drivers.
+- Turning operational problems into workflows, acceptance criteria and practical test scenarios.
 - Configuring AWS services and permissions through the Management Console.
-- Reproducing reported problems and reviewing logs, settings and business data.
-- Supplying error details and context, then testing proposed changes.
-- Checking that ordering, invoicing, production and delivery workflows behave as expected.
-- Helping business users and documenting issues and outcomes.
+- Connecting and testing WooCommerce order intake, Remote Clock attendance and on-site ADMS synchronisation.
+- Reproducing issues, reviewing logs and settings, and giving AI tools the context needed to work through changes.
+- Checking order and invoice parsing, labels, reporting and related outputs against source information.
+- Retesting affected workflows, helping business users and documenting the results.
 
-The wider work included building and integrating a Remote Clock attendance workflow with a physical device and sync agent, as well as learning WordPress and WooCommerce from the ground up and connecting the online ordering workflows with MeatOrderPro's operational processes.
-
-The technology section describes the platform's stack; the responsibilities above describe my personal contribution.
+This work brought together software, cloud configuration, physical devices and day-to-day business processes. The examples below show how those parts connect.
 
 ## What MeatOrderPro supports
 
@@ -29,6 +29,7 @@ The platform connects wholesale and retail order handling with internal producti
 | Workflow | Business purpose |
 |---|---|
 | Orders and customer records | Capture requirements, maintain account details and check products, prices and delivery options |
+| Parsing and review | Extract order details, match products and check invoice-source information before relying on the output |
 | Production and packing | Present preparation work, record actual weights and prepare labels and documents |
 | Dispatch and delivery | Allocate driver work, communicate delivery details and retain proof of delivery |
 | Invoices and statements | Produce order documents and support checks of quantities, weights and payment outcomes |
@@ -37,7 +38,7 @@ The platform connects wholesale and retail order handling with internal producti
 
 ### Simplified order workflow
 
-This is a conceptual view of the business process, rather than a deployment diagram.
+This conceptual view follows an order through the main business stages. Documents and payment checks can occur at several points.
 
 ```mermaid
 flowchart TD
@@ -46,11 +47,11 @@ flowchart TD
     B -->|Needs checking| R["Staff review"]
     C -->|Needs checking| R
     R -->|Updated details| B
-    C --> D["Prepare, weigh and pack"]
+    C -->|Ready| D["Prepare, weigh and pack"]
     D -->|Weight or item issue| R
     D --> E["Labels and documents"]
     E --> F["Dispatch and deliver"]
-    F --> G["Invoices and records"]
+    F --> G["Reconcile records and reports"]
 ```
 
 ## Integration workflows
@@ -60,30 +61,33 @@ These are simplified, conceptual views of two integration areas. They do not exp
 ### Remote Clock and device synchronisation
 
 ```mermaid
-flowchart LR
-    A["On-site attendance device"] --> B["ADMS agent on site"]
-    C["Remote Clock web page"] --> D["Cognito sign-in"]
-    D --> E["Authenticated punch request"]
-    B --> F["Shared attendance workflow"]
-    E --> F
-    F --> G["Attendance records and timesheets"]
+flowchart TD
+    A["On-site attendance device"] --> B["ADMS bridge and event import"]
+    C["Remote Clock with Cognito sign-in"] --> D["Punch request validation"]
+    B --> E["Shared attendance state"]
+    D --> E
+    E --> F["Clock status"]
+    E --> G["Timesheets and reports"]
 ```
 
-The workflow supports staff clocking in or out from either the on-site device or the remote web page. For example, a staff member can clock in remotely and clock out on the device. The on-site ADMS agent synchronises device events with the shared attendance workflow.
+The attendance workflow supports clocking in on one channel and clocking out on the other, subject to the configured rules. The on-site ADMS bridge imports device events, while the Remote Clock accepts authenticated web requests. Both contribute to the shared attendance state used for clock status and timesheets.
+
+My work included connecting these components, configuring access, checking staff workflows and investigating discrepancies between the device and web clock.
 
 ### WooCommerce and operational ordering
 
 ```mermaid
-flowchart LR
-    A["WooCommerce order"] --> B["Order webhook"]
-    B --> C["API and Lambda validation"]
-    C --> D["MeatOrderPro order records"]
-    D --> E["Order-created event"]
-    E --> F["Production and packing"]
-    F --> G["Dispatch, delivery and records"]
+flowchart TD
+    A["WooCommerce order webhook"] --> B["Map order and customer details"]
+    B --> C{"Required details valid?"}
+    C -->|Yes| D["Create or update order records"]
+    C -->|No| E["Return an error for investigation"]
+    D --> F["Production and fulfilment workflows"]
 ```
 
-The ordering integration connects the online store with MeatOrderPro's operational workflow, so order details can be checked before production and fulfilment continue.
+The intake maps WooCommerce order, customer, payment and delivery information into MeatOrderPro. It validates required fields and handles order creation and updates.
+
+My work included setting up the store, checking the integration and following orders through checkout, notifications and fulfilment to investigate unexpected results.
 
 ## How I approach support work
 
@@ -103,9 +107,9 @@ For order and invoice checks, this includes comparing outputs with the source in
 | Web delivery and access | CloudFront, S3, Cognito and IAM |
 | APIs and application workflows | AppSync, API Gateway, Lambda and Step Functions |
 | Data and background work | DynamoDB, EventBridge, SQS and SNS |
-| Documents, notifications and monitoring | S3, SES, Twilio, CloudWatch and X-Ray |
-| Commerce and devices | WooCommerce, Stripe, EC2 print server, Bixolon printing and ADMS attendance-device integrations |
-| AI and operational assistance | GPT API for invoice parsing, plus Amazon Bedrock agents for catalog, pricing, fulfilment, support, printing and observability workflows |
+| Documents, notifications and monitoring | S3, SES and CloudWatch |
+| Commerce and devices | WordPress, WooCommerce, Stripe, label printing and ADMS attendance-device integration |
+| AI and parsing | OpenAI API for assisted order parsing, product matching and invoice-source processing |
 
 ## Scope and boundaries
 
@@ -113,8 +117,8 @@ For order and invoice checks, this includes comparing outputs with the source in
 - Source code, infrastructure identifiers, production endpoints, customer and staff data, credentials and operational records remain private.
 - Inventory adjustments remain under staff control; automatic stock deduction is not claimed.
 - Staff voice transcription and consumer voice ordering are different capabilities. Consumer-facing voice ordering is not deployed.
-- Generative operations alerts are described as a designed capability that is intentionally disabled.
-- This public repository contains project descriptions and a conceptual workflow. Source code and access to live systems remain private.
+- Bedrock smart alerts are a designed capability that remains disabled. Automated catalog and pricing agents are listed as planned work in the main repository.
+- This showcase describes selected workflows and contains conceptual diagrams. The application source and live systems remain private.
 
 ## Related experience
 
@@ -123,3 +127,4 @@ For order and invoice checks, this includes comparing outputs with the source in
 - **Waqiah Foods:** WooCommerce setup and operations, online customer enquiries, payments and fulfilment coordination. [Website](https://waqiahfoods.com.au/)
 
 I am interested in product support and technical operations roles where I can combine practical investigation, customer service and continued learning.
+
