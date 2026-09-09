@@ -102,7 +102,7 @@ For order and invoice checks, this includes comparing outputs with the source in
 | Data and background work | DynamoDB, EventBridge, SQS and SNS |
 | Documents, notifications and monitoring | S3, SES, Twilio, CloudWatch and X-Ray |
 | Commerce and devices | WooCommerce, Shopify Lite, Stripe, EC2 print server, Bixolon printing and ADMS attendance-device integrations |
-| AI and operational assistance | Amazon Bedrock agents for catalog, pricing, fulfilment, support, printing and observability workflows |
+| AI and operational assistance | GPT API for invoice parsing, plus Amazon Bedrock agents for catalog, pricing, fulfilment, support, printing and observability workflows |
 
 ## Scope and boundaries
 
