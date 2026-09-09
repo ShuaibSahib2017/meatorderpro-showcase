@@ -42,12 +42,15 @@ This is a conceptual view of the business process, rather than a deployment diag
 ```mermaid
 flowchart TD
     A["Capture order"] --> B{"Details complete?"}
-    B -->|Yes| C["Prepare and pack"]
+    B -->|Yes| C["Validate products, date and slot"]
     B -->|Needs checking| R["Staff review"]
-    C -->|Weight or item issue| R
+    C -->|Needs checking| R
     R -->|Updated details| B
-    C --> D["Dispatch and deliver"]
-    D --> E["Invoices and records"]
+    C --> D["Prepare, weigh and pack"]
+    D -->|Weight or item issue| R
+    D --> E["Labels and documents"]
+    E --> F["Dispatch and deliver"]
+    F --> G["Invoices and records"]
 ```
 
 ## Integration workflows
