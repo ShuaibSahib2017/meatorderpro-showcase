@@ -1,217 +1,86 @@
 # Shuaib Sahib
 
-## Cloud, Full-Stack, and Operational Systems Builder
+## Technical Support, Customer Operations and Business Systems
 
-I take operational problems from discovery through architecture, implementation, deployment, and production support. My work connects commerce, office teams, factory workflows, drivers, finance, and workforce operations without losing sight of the people using each tool.
+I work in wholesale operations and customer support, with earlier experience as an NBN telecommunications technician. I enjoy understanding how people use a system, investigating problems and making everyday workflows easier to manage.
 
-My engineering focus is serverless AWS architecture, full-stack applications, event-driven workflows, hybrid cloud and on-premises integration, data integrity, and safe production operations.
+My practical technical experience comes from operating WooCommerce and working on MeatOrderPro, an internal AWS-based platform for a meat processing and distribution business.
 
-## Featured Case Study: MeatOrderPro
+## My contribution
 
-MeatOrderPro is a private production platform built for an Australian meat processing and distribution business. It coordinates wholesale and retail orders from checkout through factory production, weight capture, packing, dispatch, delivery, invoicing, and reporting.
+MeatOrderPro was developed with substantial AI coding assistance. Most application code was generated with AI tools. My personal work focuses on:
 
-| Dimension | Scope |
+- Understanding the needs of office staff, production teams, managers and drivers.
+- Turning those needs into workflow requirements and test scenarios.
+- Configuring AWS services and permissions through the Management Console.
+- Reproducing reported problems and reviewing logs, settings and business data.
+- Supplying error details and context to AI coding tools, then testing proposed changes.
+- Checking that ordering, invoicing, production and delivery workflows behave as expected.
+- Helping business users and documenting issues and outcomes.
+
+The technology section describes the platform's stack; the responsibilities above describe my personal contribution.
+
+## What MeatOrderPro supports
+
+The platform connects wholesale and retail order handling with internal production, dispatch and administration.
+
+| Workflow | Business purpose |
 |---|---|
-| Business model | B2B wholesale and B2C retail |
-| Users | Customers, office staff, managers, factory operators, and drivers |
-| Operating surface | Storefronts, admin tools, factory displays, mobile workflows, and on-premises devices |
-| Architecture | Serverless AWS services, event-driven workflows, and factory-edge integrations |
-| Contribution | End-to-end work across product discovery, architecture, implementation, deployment, observability, and recovery |
+| Orders and customer records | Capture requirements, maintain account details and check products, prices and delivery options |
+| Production and packing | Present preparation work, record actual weights and prepare labels and documents |
+| Dispatch and delivery | Allocate driver work, communicate delivery details and retain proof of delivery |
+| Invoices and statements | Produce order documents and support checks of quantities, weights and payment outcomes |
+| Time and attendance | Collect attendance information and support timesheet reporting |
 
-The source code, infrastructure identifiers, production endpoints, customer and staff data, and operational runbooks are private. This showcase contains intentionally high-level, sanitized diagrams and descriptions.
+### Simplified order workflow
 
-## Operational Value
-
-- Connected order capture, factory preparation, dispatch, delivery, finance, and workforce processes through one traceable operating model.
-- Reduced repeated data entry and manual handoffs with event-driven routing, generated documents, notifications, and reporting.
-- Put role-specific tools at the point of work for office, factory, management, and field users.
-- Enforced fresh-product, access, payment, and financial rules in backend services instead of relying only on interface behavior.
-- Made high-risk corrections recoverable through audit metadata, backups, deterministic replay, and field-level reconciliation.
-
-Commercial volumes, customer counts, and financial impact metrics are intentionally retained as confidential operating data.
-
-### Platform Architecture
+This is a conceptual view of the business process, rather than a deployment diagram.
 
 ```mermaid
-flowchart TB
-    subgraph Channels[Order and Operations Channels]
-        direction LR
-        COMMERCE[B2B and B2C Commerce]
-        INTAKE[Staff Order Intake]
-        OPS[Admin and Factory Apps]
-        FIELD[Driver and Workforce Apps]
-    end
-
-    subgraph Access[Delivery, Identity, and APIs]
-        direction LR
-        EDGE[CloudFront and S3]
-        AUTH[Cognito and IAM]
-        API[AppSync and API Gateway]
-    end
-
-    subgraph Platform[Serverless Application Layer]
-        direction LR
-        SERVICES[Lambda Domain Services]
-        FLOW[Step Functions]
-        EVENTS[EventBridge, SQS, and SNS]
-    end
-
-    subgraph Data[Data and Communications]
-        direction LR
-        DB[(DynamoDB)]
-        FILES[(S3 Documents and Media)]
-        NOTIFY[SES Communications]
-        OBSERVE[CloudWatch and X-Ray]
-    end
-
-    subgraph Factory[Factory Integration]
-        direction LR
-        PRINT[On-Premises Print Agents]
-        CLOCK[Attendance Device Bridge]
-    end
-
-    COMMERCE --> API
-    INTAKE --> EDGE
-    OPS --> EDGE
-    FIELD --> EDGE
-    EDGE --> AUTH
-    AUTH --> API
-    API --> SERVICES
-    SERVICES <--> FLOW
-    EVENTS <--> SERVICES
-    SERVICES <--> DB
-    SERVICES <--> FILES
-    SERVICES --> NOTIFY
-    SERVICES --> OBSERVE
-    EVENTS --> OBSERVE
-    EVENTS --> PRINT
-    CLOCK --> API
+flowchart TD
+    A["Capture order"] --> B{"Details complete?"}
+    B -->|Yes| C["Prepare and pack"]
+    B -->|Needs checking| R["Staff review"]
+    C -->|Weight or item issue| R
+    R -->|Updated details| B
+    C --> D["Dispatch and deliver"]
+    D --> E["Invoices and records"]
 ```
 
-### Order Lifecycle
+## How I approach support work
 
-```mermaid
-flowchart TB
-    subgraph Prepare[Plan and Prepare]
-        direction LR
-        ORDER[Order Received] --> VALIDATE[Policy and Capacity Validation]
-        VALIDATE --> PLAN[Production Planning]
-        PLAN --> PACK[Weight Capture and Packing]
-    end
+1. Clarify what the user was trying to do and what happened instead.
+2. Reproduce the affected workflow and record the error or unexpected result.
+3. Check relevant logs, permissions, configuration and business data.
+4. Use the available evidence when working through a fix, including AI coding assistance where needed.
+5. Retest the original workflow and check related outputs before treating the issue as resolved.
+6. Record the steps and explain the result in language the user understands.
 
-    subgraph Complete[Complete and Report]
-        direction LR
-        LABEL[Labels and Documents] --> DISPATCH[Dispatch and Driver Assignment]
-        DISPATCH --> DELIVERY[Delivery Confirmation]
-        DELIVERY --> FINANCE[Invoice and Reporting]
-    end
+For order and invoice checks, this includes comparing outputs with the source information, such as the product, quantity, weight or price, and recording which examples were checked and what happened.
 
-    PACK --> LABEL
+## Technology used in the platform
 
-    VALIDATE -. exception .-> REVIEW[Human Review]
-    PACK -. variance .-> REVIEW
-    REVIEW --> PLAN
-```
-
-### AWS Services by Stage
-
-| Stage | AWS services | Role in the platform |
-|---|---|---|
-| Web delivery and secure access | CloudFront, S3, Cognito, IAM | Deliver the web applications and enforce authenticated, role-based access |
-| Order intake and APIs | AppSync, API Gateway, Lambda | Provide GraphQL and HTTP entry points for ordering and operational tools |
-| Validation and operational data | Lambda, DynamoDB | Apply fresh-product rules and persist orders, capacity, inventory, and workflow state |
-| Workflow orchestration and background processing | Step Functions, EventBridge, SQS, SNS | Coordinate workflows, schedule jobs, decouple services, and fan out events |
-| Weight capture, packing, and factory output | Lambda, DynamoDB, SQS, S3 | Persist packed weights, queue print jobs, and store generated documents |
-| Dispatch and driver delivery | AppSync, Lambda, DynamoDB, S3, EventBridge | Assign work, track delivery state, retain proof, and emit completion events |
-| Invoicing, statements, and communication | Lambda, DynamoDB, S3, SES | Generate financial documents, archive them, and send customer communications |
-| Time and attendance | API Gateway, Lambda, DynamoDB, S3, Cognito | Securely process punches, maintain live status, and generate timesheets |
-| Monitoring and recovery | CloudWatch, X-Ray, CloudWatch Synthetics, SNS | Centralize logs, metrics, traces, health checks, and operational alerts |
-| Voice-assisted staff intake | Transcribe, Lambda | Convert staff speech to text for deterministic order processing |
-| Optional operations alerts | Bedrock, Lambda | Provide a designed generative-alert capability that is intentionally disabled |
-| Security and configuration | IAM, Cognito, Secrets Manager, Systems Manager Parameter Store | Apply least-privilege access and keep credentials and runtime configuration out of source code |
-
-## Work Delivered
-
-### Commerce and Order Capture
-
-- **Multi-channel ordering:** unified wholesale, retail, staff-entered, and message-based orders behind one operational lifecycle.
-- **Fresh-product fulfilment:** per-product lead times, channel cutoffs, blackout dates, fulfilment eligibility, delivery zones, slot capacity, and strict mixed-cart date validation.
-- **Intelligent intake:** deterministic parsing of free-form orders, customer and product alias resolution, canonical SKU mapping, historical price and unit suggestions with manual override, confidence controls, and human review paths.
-- **Storefront engineering:** delivery and checkout UX, mobile navigation and cart flows, payment-wallet compatibility, shipping thresholds, product content, transactional messaging, caching, and performance work.
-
-### Factory and Fulfilment
-
-- **Admin operations:** order creation and editing, customer profiles, search and filters, carry-forward workflows, weight entry, role-scoped views, analytics, finance controls, and recovery actions.
-- **Factory smartboard:** live preparation views, status transitions, touch-friendly controls, persistent layouts, preparation windows, print readiness, and manually controlled stock visibility.
-- **Variable-weight processing:** maximum-value authorization, actual packed-weight capture, line and order recalculation, payment capture or refund handling, finance snapshot refresh, and customer confirmation.
-- **Printing and documents:** queued thermal, shipping, box, invoice, packing, and dispatch output with barcode generation, pack splitting, retry handling, deduplication, and post-print reconciliation.
-- **Dispatch and delivery:** van and driver assignment, route planning, live location updates, proof of delivery, delivery-code validation, failed-delivery handling, manifests, and completion events.
-
-### Finance and Workforce
-
-- **Invoices and statements:** per-order documents, weekly customer statements, credits, paid and reversed states, date-range views, archive and restore policies, printing, and controlled customer delivery.
-- **Operational finance:** persisted finance snapshots, supplier and commission allocations, freight and packaging treatment, payment splits, weekly reporting, and reconciliation controls.
-- **Time and attendance:** physical-device and remote punches, duplicate suppression, manual corrections, daylight-saving handling, live clocked-in state, daily and weekly aggregation, and office printing.
-
-### Data and Platform Engineering
-
-- **Data integrity:** canonical product, customer, branch, address, freight, and order-line identities across intake, admin, printing, invoices, and historical repair workflows.
-- **History-backed suggestion engine:** customer, item, unit, and pricing recommendations based on approved historical data, constrained by current source evidence and explicit human corrections.
-- **Security:** Cognito group authorization, least-privilege IAM, protected admin operations, secret isolation, session controls, and authorization-safe PWA cache refresh.
-- **Reliability:** asynchronous events and queues, idempotency, bounded retries, dead-letter handling, health checks, alarms, tracing, retention policies, and recovery tooling.
-- **Deployment discipline:** canonical service registry, versioned web assets, scripted deployments, cache invalidation, rollback artifacts, data backups, reconciliation checks, and repository hygiene.
-
-## Engineering Challenges Solved
-
-| Challenge | Approach |
+| Area | Examples |
 |---|---|
-| Ambiguous free-form orders | Source-anchored parsing, canonical aliases, confidence thresholds, semantic guards, and deterministic replay |
-| Variable product weights | Authorize a safe maximum, capture confirmed packed weights, then recalculate payments, documents, and finance snapshots |
-| Cross-system state changes | Event-driven transitions, idempotent handlers, persisted snapshots, audit metadata, and reconciliation jobs |
-| Timezone and daylight-saving errors | Explicit business-timezone calculations for cutoffs, delivery dates, schedules, punches, and reports |
-| Factory network and device failures | Durable queues, local agents, retry and deduplication controls, cached fallback, and observable status snapshots |
-| Stale installed web applications | Versioned assets and network-first delivery for authorization-critical configuration and code |
-| Historical data drift | Non-destructive backups, canonical repair rules, replay tools, and field-level verification before and after changes |
+| Web delivery and access | CloudFront, S3, Cognito and IAM |
+| APIs and application workflows | AppSync, API Gateway, Lambda and Step Functions |
+| Data and background work | DynamoDB, EventBridge and SQS |
+| Documents, notifications and logs | S3, SES and CloudWatch |
+| Commerce and devices | WooCommerce, Stripe, label printing and attendance-device integrations |
 
-## Quality and Production Practices
+## Scope and boundaries
 
-- Focused unit and regression tests for parsing, finance, invoices, access control, and data formatting
-- End-to-end smoke checks for APIs, order lifecycle transitions, printing, and deployed web assets
-- Replay and reconciliation tooling for high-risk data corrections and historical order recovery
-- Logs, metrics, traces, synthetic health checks, alarms, and delivery-event tracking
-- Point-in-time recovery, versioning, lifecycle policies, rollback snapshots, and non-destructive deployment rules
-- A human-readable and machine-readable service registry maintained as the AWS source of truth
+- MeatOrderPro is an internal project developed alongside my wholesale operations role.
+- Source code, infrastructure identifiers, production endpoints, customer and staff data, credentials and operational records remain private.
+- Inventory adjustments remain under staff control; automatic stock deduction is not claimed.
+- Staff voice transcription and consumer voice ordering are different capabilities. Consumer-facing voice ordering is not deployed.
+- Generative operations alerts are described as a designed capability that is intentionally disabled.
+- This public repository contains project descriptions and a conceptual workflow. Source code and access to live systems remain private.
 
-## Technology
+## Related experience
 
-**AWS:** Lambda, AppSync, API Gateway, Step Functions, DynamoDB, S3, CloudFront, EventBridge, SQS, SNS, SES, Cognito, IAM, Secrets Manager, Systems Manager Parameter Store, CloudWatch, X-Ray, CloudWatch Synthetics, and Transcribe. Bedrock supports an intentionally disabled generative-alert capability.
+- **Al-Abrar Halal Meats:** B2B customer service, orders, pricing, invoicing, production coordination and delivery enquiries.
+- **NBN field service:** More than 1,500 customer-home appointments across installation, fault diagnosis and customer handover.
+- **Waqiah Foods:** WooCommerce setup and operations, online customer enquiries, payments and fulfilment coordination. [Website](https://waqiahfoods.com.au/)
 
-**Application development:** React, TypeScript, JavaScript, Node.js, Python, PowerShell, PHP, GraphQL, HTML, and CSS.
-
-**Platforms and integrations:** WooCommerce, Stripe, progressive web applications, browser geolocation, thermal printing, attendance devices, and document generation.
-
-**Delivery:** Infrastructure as Code, AWS CLI, Git, automated tests, scripted deployments, smoke tests, and operational runbooks.
-
-## Current Boundaries
-
-| Status | Scope |
-|---|---|
-| Active production capabilities | Core ordering, admin, factory, printing, dispatch, delivery, invoicing, workforce, voice transcription, and guarded learning workflows |
-| Controlled capability | Generative operations alerts are designed but intentionally disabled |
-| Voice scope | Transcribe-based transcription supports staff order intake; consumer-facing voice ordering is not deployed |
-| Retained compatibility | Some serverless checkout components remain for legacy or selected workflows while live commerce can use storefront-native checkout paths |
-| Deliberate manual control | Inventory adjustments remain operator-controlled; automatic stock deduction is not claimed |
-| Deliberately private | Source code, endpoints, identifiers, credentials, customer data, operational records, and recovery runbooks |
-
-## Design Priorities
-
-- Keep production data and infrastructure details private
-- Validate business rules on the server, not only in the interface
-- Make failures observable and recoverable
-- Design factory-facing tools for quick, repeated use
-- Use managed cloud services where they reduce operational overhead
-- Keep human approval available for financially or operationally sensitive decisions
-
-## Repository Access
-
-This repository is a sanitized portfolio overview of a proprietary production system. It contains no application source code or access to live environments.
+I am interested in product support and technical operations roles where I can combine practical investigation, customer service and continued learning.
