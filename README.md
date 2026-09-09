@@ -8,13 +8,13 @@ My practical technical experience comes from operating WooCommerce and working o
 
 ## My contribution
 
-MeatOrderPro was developed with substantial AI coding assistance. Most application code was generated with AI tools. My personal work focuses on:
+AI tools supported parts of the implementation. My personal work focuses on:
 
 - Understanding the needs of office staff, production teams, managers and drivers.
 - Turning those needs into workflow requirements and test scenarios.
 - Configuring AWS services and permissions through the Management Console.
 - Reproducing reported problems and reviewing logs, settings and business data.
-- Supplying error details and context to AI coding tools, then testing proposed changes.
+- Supplying error details and context, then testing proposed changes.
 - Checking that ordering, invoicing, production and delivery workflows behave as expected.
 - Helping business users and documenting issues and outcomes.
 
@@ -52,7 +52,7 @@ flowchart TD
 1. Clarify what the user was trying to do and what happened instead.
 2. Reproduce the affected workflow and record the error or unexpected result.
 3. Check relevant logs, permissions, configuration and business data.
-4. Use the available evidence when working through a fix, including AI coding assistance where needed.
+4. Use the available evidence when working through a fix and checking proposed changes.
 5. Retest the original workflow and check related outputs before treating the issue as resolved.
 6. Record the steps and explain the result in language the user understands.
 
