@@ -99,9 +99,10 @@ For order and invoice checks, this includes comparing outputs with the source in
 |---|---|
 | Web delivery and access | CloudFront, S3, Cognito and IAM |
 | APIs and application workflows | AppSync, API Gateway, Lambda and Step Functions |
-| Data and background work | DynamoDB, EventBridge and SQS |
-| Documents, notifications and logs | S3, SES and CloudWatch |
-| Commerce and devices | WooCommerce, Stripe, label printing and attendance-device integrations |
+| Data and background work | DynamoDB, EventBridge, SQS and SNS |
+| Documents, notifications and monitoring | S3, SES, Twilio, CloudWatch and X-Ray |
+| Commerce and devices | WooCommerce, Shopify Lite, Stripe, EC2 print server, Bixolon printing and ADMS attendance-device integrations |
+| AI and operational assistance | Amazon Bedrock agents for catalog, pricing, fulfilment, support, printing and observability workflows |
 
 ## Scope and boundaries
 
